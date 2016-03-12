@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>js complicou....kkkkk</title>
+    </head>
+    <style>
+        /* aqui codigo css */
+    </style>
+
+
+    <script>
+        // codigo js    
+        function valida(){
+            if (document.getElementById("nome").value === 'jennifer'){
+                alert("supimpa...");
+                return true;       
+            }
+            var dia = document.getElementById("dia").value;
+            var mes = document.getElementById("mes").value;
+            var ano = document.getElementById("ano").value;
+            if (!isNaN(parseInt(dia)) && !isNaN(parseInt(mes)) &&  !isNaN(parseInt(ano))){
+        //        if (){
+                // continuar os testes de validacao da data....
+          //      }             
+            } else {
+                alert("deu xabum na data....");
+            }            
+            return false;
+        }
+    </script>   
+    <body>
+        <form onsubmit="return valida()">
+            Nome: <input type="text"  id="nome" value="igor"> <br>
+            <input type="text" id="dia" maxlength="2"> / <input type="text" id="mes" maxlength="4"> / <input type="text" id="ano" maxlength="4">
+            <input type="submit" style="background-color: red" value="Agora vai...">
+        </form>
+            
+    </body>    
+
+
+
+</html>    
