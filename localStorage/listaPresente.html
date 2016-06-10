@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Lista de Compras
+	</title>
+	<script>
+		//localStorage.clear();
+		var id = localStorage.length;
+		function listaPresentes(){
+			document.getElementById("divao").innerHTML = "";
+			for (var chave in localStorage){
+				document.getElementById("divao").innerHTML+= localStorage.getItem(chave)+"<br>";
+			}
+		}
+		function adiciona(){
+			localStorage[id] = document.getElementById("novo").value;
+			id++;
+			listaPresentes();
+		}
+	</script>
+</head>
+<body onload="listaPresentes()">
+<textarea cols="20" rows="10" id="novo"></textarea> <button onclick="adiciona()">Adiciona meu Rei....</button>
+<h1>Presentes que mulhres adoram....</h1>
+<div id="divao"></div>
+
+</body>
+
+
+
+
+
+
+</html>
