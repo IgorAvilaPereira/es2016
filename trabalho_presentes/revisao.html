@@ -1,0 +1,103 @@
+<html>
+<head>
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap/css/bootstrap-theme.min.css">
+
+<script>
+
+localStorage.clear();
+
+function adicionarLista(){
+	var lista = {nome: "", vetPresente: []};
+	var nome = prompt("Digite o nome da lista:");
+	lista.nome = nome;
+	localStorage[localStorage.length] = JSON.stringify(lista);
+	listarLista();
+}
+
+function removerLista(chave){
+	localStorage.removeItem(chave);	
+	listarLista();
+}
+
+function listarLista(){
+	document.getElementById("divao").innerHTML = "<h1> Listas </h1>";
+	for (chave in localStorage){
+		var lista = JSON.parse(localStorage.getItem(chave));
+		document.getElementById("divao").innerHTML+= "<button onclick=removerLista("+chave+")> Remover </button> <button onclick=editarLista("+chave+")> Editar </button> <button onclick=adicionarPresente("+chave+")> Adicionar Presente </button> "+chave+")"+lista.nome;	
+		document.getElementById("divao").innerHTML+="<h3> Presentes </h3>";
+		var vetPresente = lista.vetPresente;		
+		for (var i = 0; i < vetPresente.length; i++){			
+			document.getElementById("divao").innerHTML+= "<button onclick=removerPresente("+chave+","+i+")>  Remover Presente </button> <button onclick=editarPresente("+chave+","+i+")> Editar Presente </button> <button onclick=migrarPresente("+chave+","+i+")> Migrar </button> " + vetPresente[i] + "<br>";
+		}
+		document.getElementById("divao").innerHTML+="<hr>";
+	}
+}
+
+function editarLista(chave){
+	var lista = JSON.parse(localStorage.getItem(chave));
+	lista.nome = prompt("Digite o novo nome da lista:");
+	localStorage.setItem(chave, JSON.stringify(lista));
+	listarLista();
+}
+
+function removerPresente(chave, indice){
+	var lista = JSON.parse(localStorage.getItem(chave));
+	
+	var novoVetPresente = [];
+	for (var i = 0; i < lista.vetPresente.length; i++){
+		if (i != indice){
+			novoVetPresente[novoVetPresente.length] = lista.vetPresente[i];
+		}
+	}
+	lista.vetPresente = novoVetPresente;
+	localStorage.setItem(chave, JSON.stringify(lista));
+	listarLista();
+
+}
+
+function editarPresente(chave, indice){
+	var lista = JSON.parse(localStorage.getItem(chave));
+	lista.vetPresente[indice] = prompt("Digite o novo valor do presente:");
+	localStorage.setItem(chave, JSON.stringify(lista));
+	listarLista();
+}
+
+function adicionarPresenteMigracao(chave, presente){
+	var lista = JSON.parse(localStorage.getItem(chave));
+	lista.vetPresente[lista.vetPresente.length] = presente;
+	localStorage.setItem(chave, JSON.stringify(lista));
+	listarLista();
+}
+
+function migrarPresente(chave, indice){
+	var lista = JSON.parse(localStorage.getItem(chave));	
+	var presente = lista.vetPresente[indice];
+	var chaveListaMigracao = prompt("Digite o codigo da lista que voce deseja que o presente migre:");
+	if (chaveListaMigracao < localStorage.length) {
+		adicionarPresenteMigracao(chaveListaMigracao,presente);
+		localStorage.setItem(chave, JSON.stringify(lista));
+		listarLista();
+	} else {
+		alert("Chave invalida");
+	}	
+}
+
+function adicionarPresente(chave){
+	var lista = JSON.parse(localStorage.getItem(chave));
+	lista.vetPresente[lista.vetPresente.length] = prompt("Digite um novo presente:");
+	localStorage.setItem(chave, JSON.stringify(lista));
+	listarLista();
+}
+</script>
+
+</head>
+
+<body onload="listarLista()"> 	
+	<button class="btn btn-danger" onclick="adicionarLista()">NovaLista</button> 
+	
+	<br>
+
+	<div id="divao"> </div>
+</body>
+</html>
